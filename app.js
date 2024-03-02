@@ -1,13 +1,57 @@
-import express from 'express';
-import mysql from 'mysql';
-// import mongoose, { mongo } from 'mongoose';
+
 import { getRoutes } from './src/scripts/get-elevator.js';
 import { putRoutes } from './src/scripts/put-elevator.js';
 import { callElevatorAPI, callElevatorRouteHandler } from './src/scripts/post-elevator.js';
+
+import express from 'express';
 const app = express();
 app.use(express.json());
 
+import mysql from 'mysql2';
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'Daniel',
+  password: process.env.MYSQL_PW,
+  database: 'elevators',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
+// pool.query('',((err, results) => {
+//   if (err) {
+//     console.error('Error executing query:', err);
+//     return;
+//   }
+//   console.log('Query results:', results);
+// }));
+
+// connection.connect(function(err) {
+//   if (err) {
+//     console.error(`Error connecting to the MySQL server: ${err.stack}`);
+//     return;
+//   }
+//   console.log(`Connected to the MySQL server`);
+// });
+
+// const newDatabase = 'elevators';
+// const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${newDatabase}`;
+
+// connection.query(createDatabaseQuery, function(err, results) {
+//   if (err) {
+//     console.error('Error creating database', err);
+//     return;
+//   }
+//   console.log(`Database ${newDatabase} created successfully`);
+// });
+
+// connection.end(function(err) {
+//   if (err) {
+//     console.error(`Error closing connection: ${err.stack}`);
+//     return;
+//   }
+//   console.log('MySQL connection closed');
+// });
 
 // mongoose.connect('mongodb://localhost/elevators')
 //   .then(() => console.log('Connected to MongoDB...'))
@@ -57,4 +101,4 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-export default { elevatorSchema, Elevator };
+// export default { elevatorSchema, Elevator };

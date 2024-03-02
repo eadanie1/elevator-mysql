@@ -1,5 +1,5 @@
 
-import { Elevator } from "../../app.js";
+// import { Elevator } from "../../app.js";
 import asyncLock from 'async-lock'; // Import async-lock package
 const lock = new asyncLock(); // Create a new instance of async-lock
 
