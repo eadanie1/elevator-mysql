@@ -18,7 +18,7 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// pool.query('',((err, results) => {
+// pool.query(createElevatorInstances, ((err, results) => {
 //   if (err) {
 //     console.error('Error executing query:', err);
 //     return;
@@ -26,59 +26,13 @@ const pool = mysql.createPool({
 //   console.log('Query results:', results);
 // }));
 
-// connection.connect(function(err) {
-//   if (err) {
-//     console.error(`Error connecting to the MySQL server: ${err.stack}`);
-//     return;
-//   }
-//   console.log(`Connected to the MySQL server`);
-// });
-
-// const newDatabase = 'elevators';
-// const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${newDatabase}`;
-
-// connection.query(createDatabaseQuery, function(err, results) {
-//   if (err) {
-//     console.error('Error creating database', err);
-//     return;
-//   }
-//   console.log(`Database ${newDatabase} created successfully`);
-// });
-
-// connection.end(function(err) {
-//   if (err) {
-//     console.error(`Error closing connection: ${err.stack}`);
-//     return;
-//   }
-//   console.log('MySQL connection closed');
-// });
-
-// mongoose.connect('mongodb://localhost/elevators')
-//   .then(() => console.log('Connected to MongoDB...'))
-//   .catch(err => console.error('Unable to connect to MongoDB', err));
-
-// export const elevatorSchema = new mongoose.Schema({
-//   id: Number,
-//   currentFloor: Number,
-//   status: String,
-//   destinationFloor: Number,
-// });
-
-// export const Elevator = mongoose.model('Elevator', elevatorSchema);
-
-// async function createElevator(id) {
-//   const elevator = new Elevator({
-//     id: id,
-//     currentFloor: 0,
-//     status: 'idle',
-//     destinationFloor: 0
-//   }) 
-//   const result = await elevator.save();
-//   console.log(result);
-// }
-// createElevator(1);
-// createElevator(2);
-// createElevator(3);
+pool.end((err) => {
+  if (err) {
+    console.error('Error closing pool connection', err);
+    return;
+  }
+  console.log('Pool connection ended successfully');
+})
 
 getRoutes.forEach(route => {
   app.get(route.path, route.handler);
@@ -98,7 +52,7 @@ app.post('/api/elevators/call', callElevatorRouteHandler);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`Connected to the MySQL server, and listening on port ${port}`);
 });
 
 // export default { elevatorSchema, Elevator };
