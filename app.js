@@ -7,8 +7,8 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-import mysql from 'mysql2';
-const pool = mysql.createPool({
+import mysql from 'mysql2/promise';
+export const pool = mysql.createPool({
   host: 'localhost',
   user: 'Daniel',
   password: process.env.MYSQL_PW,
@@ -18,21 +18,16 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// pool.query(createElevatorInstances, ((err, results) => {
-//   if (err) {
-//     console.error('Error executing query:', err);
-//     return;
-//   }
-//   console.log('Query results:', results);
-// }));
-
-pool.end((err) => {
-  if (err) {
-    console.error('Error closing pool connection', err);
-    return;
+process.on('SIGINT', async () => {
+  try {
+    await pool.end();
+    console.log('MySQL pool connection closed.');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error closing MySQL pool connection:', err);
+    process.exit(1);
   }
-  console.log('Pool connection ended successfully');
-})
+});
 
 getRoutes.forEach(route => {
   app.get(route.path, route.handler);
@@ -52,7 +47,7 @@ app.post('/api/elevators/call', callElevatorRouteHandler);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Connected to the MySQL server, and listening on port ${port}`);
+    console.log(`MySQL pool connection established. Listening on port ${port}.`);
 });
 
-// export default { elevatorSchema, Elevator };
+export default { pool };

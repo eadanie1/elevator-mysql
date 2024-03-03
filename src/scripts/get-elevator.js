@@ -1,27 +1,26 @@
 
-// import { Elevator } from "../../app.js";
+import { pool } from "../../app.js";
 
 export async function statusAllElevators(req, res) {
   try {
-      const elevators = await Elevator
-        .find({id: {$gte: 1, $lte: 3}})
-        .select('id currentFloor status destinationFloor -_id')
-        .sort('id')
-      return elevators;
+    const result = await pool.query('SELECT * FROM elevators');
+    return result[0];
   }
   catch(error) {
-    console.error('Error retrieving collection', error)
+    console.error('Error retrieving collection', error);
+    throw error;
   }
 }
 
 export async function isElevatorAvailable(id, req, res) {
   try {
-      const elevator = await Elevator
-        .find({id: id})
-        .select('id currentFloor status -_id')
-      res.json(elevator);
-      elevator[0].status === 'idle' ? console.log(`Elevator ${id} is available for a new call`) : 
-        console.log(`Elevator ${id} is busy, please wait for the next idle elevator`);
+    const elevator = await pool.query(`
+      SELECT * FROM elevators WHERE id = ${id}
+    `);
+    
+    (elevator[0][0]).status === 'idle' ? console.log(`Elevator ${id} is available for a new call`) : 
+    console.log(`Elevator ${id} is busy, please wait for the next idle elevator`);
+    res.json(elevator[0][0]);
   }
   catch(error) {
     console.error('Error', error)
