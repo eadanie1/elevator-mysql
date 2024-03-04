@@ -19,8 +19,8 @@ export async function findClosestElevator(floor) {
     console.log(elevators.length);
     
     if (!elevators || elevators.length === 0) {
-      console.log('should log if no idle elevators');
-      return null;
+      // console.log('should log if no idle elevators');
+      return;
     }
     
     for (const elevator of elevators) {
