@@ -40,6 +40,7 @@ putRoutes.forEach(route => {
 app.post('/api/elevators/call', callElevatorRouteHandler);
 // callElevatorAPI([10, 15, 20, 22, 23, 24]);
 // callElevatorAPI([10, 20, 30, 40, 50, 60]);
+callElevatorAPI([6, 8, 10]);
 // callElevatorAPI([10, 20, 30]);
 // callElevatorAPI([15, 25, 35]);
 // callElevatorAPI([65, 45, 75]);

@@ -10,11 +10,13 @@ export async function findClosestElevator(floor) {
   try {
     let closestElevator = null;
     let minDistance = Number.MAX_SAFE_INTEGER;
-  
-    const elevators = await Elevator
-      .find({status: 'idle'})
-    // console.log(elevators);
-      
+    
+    const resultsArray = await pool.query(`
+      SELECT * FROM elevators WHERE status = 'idle'
+    `);
+
+    const elevators = resultsArray[0];
+    
     for (const elevator of elevators) {
       const distance = Math.abs(elevator.currentFloor - floor);
       if (distance < minDistance) {
@@ -34,13 +36,22 @@ export async function moveElevator(elevator) {
     const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 1000;
     await new Promise(resolve => setTimeout(resolve, moveTime));
     
-    elevator.set({
-      currentFloor: elevator.destinationFloor,
-      status: 'idle',
-      destinationFloor: 0
-    })
-    console.log(`Elevator ${elevator.id} reached floor ${elevator.currentFloor}`);
-    await elevator.save();
+    await pool.query(`
+      UPDATE elevators
+      SET
+        currentFloor = ${elevator.destinationFloor},
+        status = 'idle',
+        destinationFloor = 0
+      WHERE id = ${elevator.id}
+    `);
+
+    const resultsArray = await pool.query(`
+      SELECT * FROM elevators WHERE id = ${elevator.id}
+    `);
+
+    const updatedElevator = resultsArray[0][0];
+
+    console.log(`Elevator ${updatedElevator.id} reached floor ${updatedElevator.currentFloor}`);
     
     if (callsQueue.length > 0) {
       const call = callsQueue.shift();
@@ -77,14 +88,22 @@ export async function callElevator(floors) {
         }
   
         if (closestElevator) {
-          closestElevator.set({
-            status: (closestElevator.currentFloor < floor) ? 'moving_up' : 'moving_down',
-            destinationFloor: floor
-        });
-        await closestElevator.save();
-        
-        moveElevator(closestElevator); 
-      }
+          await pool.query(`
+            UPDATE elevators
+            SET
+              status = ${closestElevator.currentFloor < floor ? `'moving_up'` : `'moving_down'`},
+              destinationFloor = ${floor}
+            WHERE id = ${closestElevator.id}
+          `);
+
+          const resultsArray = await pool.query(`
+            SELECT * FROM elevators WHERE id = ${closestElevator.id}
+          `);
+
+          const updatedElevator = resultsArray[0][0];
+
+          await moveElevator(updatedElevator); 
+        }
       }
     })
   } catch(err) {
