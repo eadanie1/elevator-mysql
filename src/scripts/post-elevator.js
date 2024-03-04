@@ -12,19 +12,48 @@ export async function findClosestElevator(floor) {
     let minDistance = Number.MAX_SAFE_INTEGER;
     
     const resultsArray = await pool.query(`
-      SELECT * FROM elevators WHERE status = 'idle'
+    SELECT * FROM elevators WHERE status = 'idle'
     `);
-
+    
     const elevators = resultsArray[0];
     
     for (const elevator of elevators) {
+      if (elevators.length === 0) {
+        callsQueue.push({ floor });
+        console.log(`No idle elevators available. Call queued for floor ${floor}`);
+        continue;
+      }
+      
       const distance = Math.abs(elevator.currentFloor - floor);
       if (distance < minDistance) {
         minDistance = distance;
         closestElevator = elevator;
       }
+      console.log(closestElevator);
+      if (closestElevator.currentFloor === floor) {
+        console.log(`Elevator ${closestElevator.id} is already at floor ${floor}`);
+        // res.json({message: `Elevator ${closestElevator.id} is already at floor ${floor}`});
+        const index = elevators.indexOf(closestElevator);
+        elevators.splice(index, 1);
+        continue;
+      }
     }
-    return closestElevator;
+
+    await pool.query(`
+      UPDATE elevators
+      SET
+        status = ${closestElevator.currentFloor < floor ? `'moving_up'` : `'moving_down'`},
+        destinationFloor = ${floor}
+      WHERE id = ${closestElevator.id}
+    `);
+        
+    const closestElevatorResultsArray = await pool.query(`
+      SELECT * FROM elevators WHERE id = ${closestElevator.id}
+    `);
+
+    const assignedClosestElevator = closestElevatorResultsArray[0][0];
+        
+    return assignedClosestElevator;
   } catch(err) {
     console.error('Error', err.message);
     throw err;
@@ -33,25 +62,20 @@ export async function findClosestElevator(floor) {
 
 export async function moveElevator(elevator) {
   try {
+    // console.log(elevator);
     const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 1000;
     await new Promise(resolve => setTimeout(resolve, moveTime));
     
     await pool.query(`
-      UPDATE elevators
-      SET
-        currentFloor = ${elevator.destinationFloor},
-        status = 'idle',
-        destinationFloor = 0
-      WHERE id = ${elevator.id}
+    UPDATE elevators
+    SET
+    currentFloor = ${elevator.destinationFloor},
+    status = 'idle',
+    destinationFloor = 0
+    WHERE id = ${elevator.id}
     `);
 
-    const resultsArray = await pool.query(`
-      SELECT * FROM elevators WHERE id = ${elevator.id}
-    `);
-
-    const updatedElevator = resultsArray[0][0];
-
-    console.log(`Elevator ${updatedElevator.id} reached floor ${updatedElevator.currentFloor}`);
+    console.log(`Elevator ${elevator.id} reached floor ${elevator.destinationFloor}`);
     
     if (callsQueue.length > 0) {
       const call = callsQueue.shift();
@@ -64,7 +88,7 @@ export async function moveElevator(elevator) {
     throw err;
   }
 }
-  
+
 export async function callElevator(floors) {
   try {
     await lock.acquire('callElevatorLock', async () => {
@@ -72,39 +96,28 @@ export async function callElevator(floors) {
         console.error('Invalid input. Expected an array of floors.');
         return;
       }
+
+      const assignedElevatorsArray = [];
       
       for (const floor of floors) {
         let closestElevator = await findClosestElevator(floor);
-        if (!closestElevator) {
-          callsQueue.push({ floor });
-          console.log(`No idle elevators available. Call queued for floor ${floor}`);
-          continue;
-        }
-  
-        if (closestElevator.currentFloor === floor) {
-          console.log(`Elevator ${closestElevator.id} is already at floor ${floor}`);
-          // res.json({message: `Elevator ${closestElevator.id} is already at floor ${floor}`});
-          continue;
-        }
-  
-        if (closestElevator) {
-          await pool.query(`
-            UPDATE elevators
-            SET
-              status = ${closestElevator.currentFloor < floor ? `'moving_up'` : `'moving_down'`},
-              destinationFloor = ${floor}
-            WHERE id = ${closestElevator.id}
-          `);
+        // if (!closestElevator) {
+        //   callsQueue.push({ floor });
+        //   console.log(`No idle elevators available. Call queued for floor ${floor}`);
+        //   continue;
+        // }
 
-          const resultsArray = await pool.query(`
-            SELECT * FROM elevators WHERE id = ${closestElevator.id}
-          `);
-
-          const updatedElevator = resultsArray[0][0];
-
-          await moveElevator(updatedElevator); 
-        }
+        assignedElevatorsArray.push(closestElevator);
       }
+
+      while (assignedElevatorsArray.length > 0) {
+        const shiftedClosestElevator = assignedElevatorsArray.shift();
+        console.log(shiftedClosestElevator);
+        moveElevator(shiftedClosestElevator); 
+      }
+      // console.log(closestElevator);
+      // ABOVE LOG SHOULD NOT HAVE CLOSESTEL IF ALL ALREADY ON FLOOR, 
+      // AND THEY SHOULD NOT BE MOVING
     })
   } catch(err) {
     console.error('Error', err.message);
