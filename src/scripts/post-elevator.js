@@ -16,21 +16,21 @@ export async function findClosestElevator(floor) {
     `);
     
     const elevators = resultsArray[0];
+    console.log(elevators.length);
+    
+    if (!elevators || elevators.length === 0) {
+      console.log('should log if no idle elevators');
+      return null;
+    }
     
     for (const elevator of elevators) {
-      if (elevators.length === 0) {
-        callsQueue.push({ floor });
-        console.log(`No idle elevators available. Call queued for floor ${floor}`);
-        continue;
-      }
-      
       const distance = Math.abs(elevator.currentFloor - floor);
       if (distance < minDistance) {
         minDistance = distance;
         closestElevator = elevator;
       }
-      console.log(closestElevator);
-      if (closestElevator.currentFloor === floor) {
+
+      if (closestElevator && closestElevator.currentFloor === floor) {
         console.log(`Elevator ${closestElevator.id} is already at floor ${floor}`);
         // res.json({message: `Elevator ${closestElevator.id} is already at floor ${floor}`});
         const index = elevators.indexOf(closestElevator);
@@ -62,7 +62,6 @@ export async function findClosestElevator(floor) {
 
 export async function moveElevator(elevator) {
   try {
-    // console.log(elevator);
     const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 1000;
     await new Promise(resolve => setTimeout(resolve, moveTime));
     
@@ -101,18 +100,17 @@ export async function callElevator(floors) {
       
       for (const floor of floors) {
         let closestElevator = await findClosestElevator(floor);
-        // if (!closestElevator) {
-        //   callsQueue.push({ floor });
-        //   console.log(`No idle elevators available. Call queued for floor ${floor}`);
-        //   continue;
-        // }
-
+        if (!closestElevator) {
+          callsQueue.push({ floor });
+          console.log(`No idle elevators available. Call queued for floor ${floor}`);
+          continue;
+        }
+        console.log(closestElevator);
         assignedElevatorsArray.push(closestElevator);
       }
 
       while (assignedElevatorsArray.length > 0) {
         const shiftedClosestElevator = assignedElevatorsArray.shift();
-        console.log(shiftedClosestElevator);
         moveElevator(shiftedClosestElevator); 
       }
       // console.log(closestElevator);
