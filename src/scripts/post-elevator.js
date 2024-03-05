@@ -100,10 +100,9 @@ export async function callElevator(floors) {
 
         if (!closestElevator) {
           callsQueue.push({ floor });
-          console.log(`No idle elevators available. Call queued for floor ${floor}`);
+          console.log(`No idle elevators available. Call queued for floor ${floor}.`);
           continue;
         }
-        console.log(closestElevator);
         assignedElevatorsArray.push(closestElevator);
       }
 
@@ -136,7 +135,7 @@ export async function callElevatorRouteHandler(req, res) {
   
       await callElevator(floors);
   
-    // res.json({ message: `Elevators called for floors ${floors.join(', ')}` });
+    console.log(`Elevators called for floors ${floors.join(', ')}`);
   } catch(err) {
     console.log('Error', err.message);
     res.status(400).json({ error: err.message });
