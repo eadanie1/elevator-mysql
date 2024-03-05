@@ -43,6 +43,7 @@ app.post('/api/elevators/call', callElevatorRouteHandler);
 // callElevatorAPI([4, 6, 8, 10]);
 // callElevatorAPI([4, 6, 8, 10, 12]);
 // callElevatorAPI([2, 3, 4]);
+// callElevatorAPI([1,2,3]);
 // callElevatorAPI([10, 20, 30]);
 // callElevatorAPI([15, 25, 35]);
 // callElevatorAPI([65, 45, 75]);

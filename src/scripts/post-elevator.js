@@ -16,10 +16,8 @@ export async function findClosestElevator(floor) {
     `);
     
     const elevators = resultsArray[0];
-    console.log(elevators.length);
     
-    if (!elevators || elevators.length === 0) {
-      // console.log('should log if no idle elevators');
+    if (elevators.length === 0) {
       return;
     }
     
@@ -32,10 +30,7 @@ export async function findClosestElevator(floor) {
 
       if (closestElevator && closestElevator.currentFloor === floor) {
         console.log(`Elevator ${closestElevator.id} is already at floor ${floor}`);
-        // res.json({message: `Elevator ${closestElevator.id} is already at floor ${floor}`});
-        const index = elevators.indexOf(closestElevator);
-        elevators.splice(index, 1);
-        continue;
+        return closestElevator = 0;
       }
     }
 
@@ -100,6 +95,9 @@ export async function callElevator(floors) {
       
       for (const floor of floors) {
         let closestElevator = await findClosestElevator(floor);
+
+        if (closestElevator === 0) continue;
+
         if (!closestElevator) {
           callsQueue.push({ floor });
           console.log(`No idle elevators available. Call queued for floor ${floor}`);
@@ -113,9 +111,6 @@ export async function callElevator(floors) {
         const shiftedClosestElevator = assignedElevatorsArray.shift();
         moveElevator(shiftedClosestElevator); 
       }
-      // console.log(closestElevator);
-      // ABOVE LOG SHOULD NOT HAVE CLOSESTEL IF ALL ALREADY ON FLOOR, 
-      // AND THEY SHOULD NOT BE MOVING
     })
   } catch(err) {
     console.error('Error', err.message);
