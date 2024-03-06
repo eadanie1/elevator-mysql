@@ -3,38 +3,48 @@ import { pool } from "../../app.js";
 import asyncLock from 'async-lock';
 const lock = new asyncLock();
 
+export async function findElevator(id, destinationFloor, req, res) {
+  const elevator = await pool.query(`
+    SELECT *
+    FROM elevators
+    WHERE id = ${id}
+  `);
+  
+  if (elevator[0].length === 0) {
+      console.log('No elevator found, please double check the ID no and try again');
+      res.json({message: 'No elevator found, please double check the ID no and try again'})
+      return;
+  };
+  
+  if (elevator[0][0].currentFloor === destinationFloor) {
+      console.log(`Elevator ${id} is already at floor ${destinationFloor}`);
+      res.json({message: `Elevator ${id} is already at floor ${destinationFloor}`});
+      return;
+  };
+
+  return elevator;
+}
+
 export async function updateElevatorStatus(id, destinationFloor, req, res) {
   try {
     await lock.acquire('updateElevatorLock', async () => {
-      const elevator = await pool.query(`
-        SELECT *
-        FROM elevators
-        WHERE id = ${id}
-      `);
-    
-      if (!elevator) {
-          console.log('No elevator found, please double check the ID no and try again');
-          res.json({message: 'No elevator found, please double check the ID no and try again'})
-          return;
-      };
-        
-      if (elevator[0][0].currentFloor === destinationFloor) {
-          console.log(`Elevator ${id} is already at floor ${destinationFloor}`);
-          res.json({message: `Elevator ${id} is already at floor ${destinationFloor}`});
-          return;
-      };
+      const foundElevator = await findElevator(id, destinationFloor, req, res);
+
+      if (!foundElevator) {
+        return;
+      }
       
       await pool.query(`
         UPDATE elevators
         SET
-          status = ${elevator[0][0].currentFloor < destinationFloor ? `'moving_up'` : `'moving_down'`},
+          status = ${foundElevator[0][0].currentFloor < destinationFloor ? `'moving_up'` : `'moving_down'`},
           destinationFloor = ${destinationFloor}
         WHERE id = ${id}
       `);
       
       console.log(`Elevator ${id} is called for floor ${destinationFloor}`);
       
-      const moveTime = Math.abs(destinationFloor - elevator[0][0].currentFloor) * 1000;
+      const moveTime = Math.abs(destinationFloor - foundElevator[0][0].currentFloor) * 1000;
       await new Promise(resolve => setTimeout(resolve, moveTime));
       
       await pool.query(`
