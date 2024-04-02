@@ -1,5 +1,6 @@
-node_modules/
+backend/node_modules/
+backend/src/scripts/test-post.js
+backend/src/scripts/test-post2.js
+backend/src/scripts/test-post3.js
 
-test-post.js
-test-post2.js
-test-post3.js
+frontend/elevator-react/node_modules
