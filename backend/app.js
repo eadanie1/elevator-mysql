@@ -2,10 +2,12 @@
 import { getRoutes } from './src/scripts/get-elevator.js';
 import { putRoutes } from './src/scripts/put-elevator.js';
 import { callElevatorAPI, callElevatorRouteHandler } from './src/scripts/post-elevator.js';
+import cors from 'cors';
 
 import express from 'express';
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 import mysql from 'mysql2/promise';
 export const pool = mysql.createPool({
