@@ -7,6 +7,17 @@ import { Elevator } from "./types/types";
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
   const [error, setError] = useState(null);
+  const [floor1, setFloor1] = useState<number | null>(null);
+  const [floor2, setFloor2] = useState<number | null>(null);
+  const [floor3, setFloor3] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (elevators.length > 0) {
+      setFloor1(elevators[0]?.currentFloor);
+      setFloor2(elevators[1]?.currentFloor);
+      setFloor3(elevators[2]?.currentFloor);
+    }
+  }, [elevators]);
 
   useEffect(() => {
     axios
@@ -20,10 +31,42 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    // change to dynamically reading from UpdateStatus once form setup
+    // const id = 1;
+    const id = 2;
+    // const id = 3;
+    const floor = 3;
+    // change to dynamically reading from UpdateStatus once form setup
+    axios
+      .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
+      .then((res) => {
+        if (id === 1) {
+          setFloor1(floor);
+        } else if (id === 2) {
+          setFloor2(floor);
+        } else if (id === 3) {
+          setFloor3(floor);
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  }, []);
+
+  console.log(elevators);
+
   return (
     <>
-      <ElevatorStatus elevators={elevators} />
-      <small>Icons and images taken from icons8</small>
+      <ElevatorStatus
+        elevators={elevators}
+        floor1={floor1}
+        floor2={floor2}
+        floor3={floor3}
+      />
+      <small style={{ position: "fixed", bottom: "50px" }}>
+        Icons and images taken from icons8
+      </small>
     </>
   );
 }

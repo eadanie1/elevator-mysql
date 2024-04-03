@@ -1,0 +1,10 @@
+.elevator {
+  background-color: rgb(7, 48, 48) !important;
+  border-color: goldenrod !important;
+  color: goldenrod !important;
+}
+
+select {
+  background-color: goldenrod !important;
+  border-color: rgb(247, 215, 134) !important;
+}
