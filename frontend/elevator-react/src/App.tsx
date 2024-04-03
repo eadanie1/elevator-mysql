@@ -32,23 +32,44 @@ function App() {
       });
   }, []);
 
+  // useEffect(() => {
+  //   // change to dynamically reading from UpdateStatus once form setup
+  //   const id = 1;
+  //   // const id = 2;
+  //   // const id = 3;
+  //   const floor = 0;
+  //   // change to dynamically reading from UpdateStatus once form setup
+  //   axios
+  //     .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
+  //     .then((res) => {
+  //       if (id === 1) {
+  //         setFloor1(floor);
+  //       } else if (id === 2) {
+  //         setFloor2(floor);
+  //       } else if (id === 3) {
+  //         setFloor3(floor);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    // change to dynamically reading from UpdateStatus once form setup
-    const id = 1;
-    // const id = 2;
-    // const id = 3;
-    const floor = 0;
-    // change to dynamically reading from UpdateStatus once form setup
+    // change to dynamically reading from CallElevator once form setup
+    const floors = [0, 1, 2];
+
+    // also debug what double call is about in backend server
     axios
-      .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
+      .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
       .then((res) => {
-        if (id === 1) {
-          setFloor1(floor);
-        } else if (id === 2) {
-          setFloor2(floor);
-        } else if (id === 3) {
-          setFloor3(floor);
-        }
+        // if (id === 1) {
+        //   setFloor1(floor);
+        // } else if (id === 2) {
+        //   setFloor2(floor);
+        // } else if (id === 3) {
+        //   setFloor3(floor);
+        // }
       })
       .catch((err) => {
         setError(err.message);
@@ -66,7 +87,9 @@ function App() {
         floor3={floor3}
       />
       <FloorLines />
-      <small style={{ position: "fixed", bottom: "26px", left: "50%" }}>
+      <small
+        style={{ position: "fixed", bottom: "26px", left: "50%", zIndex: "-1" }}
+      >
         Icons and images taken from icons8
       </small>
     </>
