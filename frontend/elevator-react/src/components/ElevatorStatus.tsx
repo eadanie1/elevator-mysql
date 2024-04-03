@@ -29,7 +29,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[0]?.id}</h5>
-          <p>Current: {elevators[0]?.currentFloor}</p>
           <p>Status: {elevators[0]?.status}</p>
           <p>Destination: {elevators[0]?.destinationFloor}</p>
           <div className="d-flex justify-content-between mt-2">
@@ -39,11 +38,14 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
             </form>
             {/* <button key={`swap-${e.id}`} className={` btn`}>
                       Swap
-                    </button>
-                    <button key={`delete-${e.id}`} className={` btn`}>
+                      </button>
+                      <button key={`delete-${e.id}`} className={` btn`}>
                       Delete
                     </button> */}
           </div>
+          <p className={`${styles.current}`}>
+            Current: {elevators[0]?.currentFloor}
+          </p>
         </div>
       </div>
       <div
@@ -62,7 +64,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[1]?.id}</h5>
-          <p>Current: {elevators[1]?.currentFloor}</p>
           <p>Status: {elevators[1]?.status}</p>
           <p>Destination: {elevators[1]?.destinationFloor}</p>
           <div className="d-flex justify-content-between mt-2">
@@ -72,11 +73,14 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
             </form>
             {/* <button key={`swap-${e.id}`} className={` btn`}>
                       Swap
-                    </button>
-                    <button key={`delete-${e.id}`} className={` btn`}>
+                      </button>
+                      <button key={`delete-${e.id}`} className={` btn`}>
                       Delete
                     </button> */}
           </div>
+          <p className={`${styles.current}`}>
+            Current: {elevators[1]?.currentFloor}
+          </p>
         </div>
       </div>
       <div
@@ -95,7 +99,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[2]?.id}</h5>
-          <p>Current: {elevators[2]?.currentFloor}</p>
           <p>Status: {elevators[2]?.status}</p>
           <p>Destination: {elevators[2]?.destinationFloor}</p>
           <div className="d-flex justify-content-between mt-2">
@@ -105,11 +108,14 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
             </form>
             {/* <button key={`swap-${e.id}`} className={` btn`}>
                       Swap
-                    </button>
-                    <button key={`delete-${e.id}`} className={` btn`}>
+                      </button>
+                      <button key={`delete-${e.id}`} className={` btn`}>
                       Delete
                     </button> */}
           </div>
+          <p className={`${styles.current}`}>
+            Current: {elevators[2]?.currentFloor}
+          </p>
         </div>
       </div>
     </div>

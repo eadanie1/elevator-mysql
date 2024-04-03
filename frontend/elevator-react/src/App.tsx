@@ -3,6 +3,7 @@ import axios from "axios";
 import "./App.css";
 import ElevatorStatus from "./components/ElevatorStatus";
 import { Elevator } from "./types/types";
+import FloorLines from "./components/FloorLines";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
@@ -34,9 +35,9 @@ function App() {
   useEffect(() => {
     // change to dynamically reading from UpdateStatus once form setup
     // const id = 1;
-    const id = 2;
-    // const id = 3;
-    const floor = 3;
+    // const id = 2;
+    const id = 3;
+    const floor = 10;
     // change to dynamically reading from UpdateStatus once form setup
     axios
       .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
@@ -64,6 +65,7 @@ function App() {
         floor2={floor2}
         floor3={floor3}
       />
+      <FloorLines />
       <small style={{ position: "fixed", bottom: "50px" }}>
         Icons and images taken from icons8
       </small>

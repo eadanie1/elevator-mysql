@@ -1,0 +1,141 @@
+
+.line {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color:deepskyblue; 
+  z-index: -1;
+}
+
+.line1 {
+  bottom: 10px;
+}
+
+.lineText1 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 0px;
+  padding-left: 20px;
+}
+
+.line2 {
+  bottom: 60px;
+}
+
+.lineText2 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 50px;
+  padding-left: 20px;
+}
+
+.line3 {
+  bottom: 110px;
+}
+
+.lineText3 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 100px;
+  padding-left: 20px;
+}
+
+.line4 {
+  bottom: 160px;
+}
+
+.lineText4 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 150px;
+  padding-left: 20px;
+}
+
+.line5 {
+  bottom: 210px;
+}
+
+.lineText5 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 200px;
+  padding-left: 20px;
+}
+
+.line6 {
+  bottom: 260px;
+}
+
+.lineText6 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 250px;
+  padding-left: 20px;
+}
+
+.line7 {
+  bottom: 310px;
+}
+
+.lineText7 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 300px;
+  padding-left: 20px;
+}
+
+.line8 {
+  bottom: 360px;
+}
+
+.lineText8 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 350px;
+  padding-left: 20px;
+}
+
+.line9 {
+  bottom: 410px;
+}
+
+.lineText9 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 400px;
+  padding-left: 20px;
+}
+
+.line10 {
+  bottom: 460px;
+}
+
+.lineText10 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 450px;
+  padding-left: 20px;
+}
+
+.line11 {
+  bottom: 510px;
+}
+
+.lineText11 {
+  font-size: 26px;
+  color: deepskyblue;
+  position: fixed;
+  bottom: 500px;
+  padding-left: 20px;
+}
