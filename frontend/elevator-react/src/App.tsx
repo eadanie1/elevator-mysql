@@ -34,10 +34,10 @@ function App() {
 
   useEffect(() => {
     // change to dynamically reading from UpdateStatus once form setup
-    // const id = 1;
+    const id = 1;
     // const id = 2;
-    const id = 3;
-    const floor = 10;
+    // const id = 3;
+    const floor = 0;
     // change to dynamically reading from UpdateStatus once form setup
     axios
       .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
@@ -66,7 +66,7 @@ function App() {
         floor3={floor3}
       />
       <FloorLines />
-      <small style={{ position: "fixed", bottom: "50px" }}>
+      <small style={{ position: "fixed", bottom: "26px", left: "50%" }}>
         Icons and images taken from icons8
       </small>
     </>

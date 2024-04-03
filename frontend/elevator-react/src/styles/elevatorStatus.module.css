@@ -1,7 +1,8 @@
 .elevator {
-  background-color: rgb(126, 126, 126) !important;
-  border-color: black !important;
-  color: black !important;
+  background-color: rgb(7, 48, 48) !important;
+  border: 3px solid goldenrod !important;
+  border-radius: 8px !important;
+  color: goldenrod !important;
 }
 
 .current {
@@ -10,6 +11,6 @@
 }
 
 select {
-  background-color: darkgray !important;
-  border-color: black  !important;
+  background-color: goldenrod !important;
+  border-color: rgb(247, 215, 134)  !important;
 }

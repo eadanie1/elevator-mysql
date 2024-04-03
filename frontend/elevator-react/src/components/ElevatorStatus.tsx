@@ -1,5 +1,6 @@
 import { Elevator } from "../types/types";
 import styles from "../styles/elevatorStatus.module.css";
+import ElevatorCables from "./ElevatorCables";
 
 interface ESProps {
   elevators: Elevator[];
@@ -12,13 +13,33 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
   console.log(elevators);
 
   return (
-    <div className="d-flex">
+    <div className="postition-relative">
+      <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(33.33% - 150px)",
+          width: "3px",
+          height: `calc(100% - ${floor1 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(33.33% - 130px)",
+          width: "3px",
+          height: `calc(100% - ${floor1 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
       <div
         className={`${styles.elevator} card`}
         style={{
           position: "fixed",
           bottom: `${floor1 * 50 + 10}px`,
-          left: "22%",
+          left: "calc(33.33% - 230px)",
         }}
       >
         <img
@@ -49,11 +70,31 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         </div>
       </div>
       <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(66.66% - 160px)",
+          width: "3px",
+          height: `calc(100% - ${floor2 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(66.66% - 140px)",
+          width: "3px",
+          height: `calc(100% - ${floor2 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
+      <div
         className={`${styles.elevator} card`}
         style={{
           position: "fixed",
           bottom: `${floor2 * 50 + 10}px`,
-          left: "44%",
+          left: "calc(66.66% - 240px)",
         }}
       >
         <img
@@ -84,11 +125,31 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         </div>
       </div>
       <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(100% - 170px)",
+          width: "3px",
+          height: `calc(100% - ${floor3 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "calc(100% - 150px)",
+          width: "3px",
+          height: `calc(100% - ${floor3 * 50 + 365}px)`,
+          backgroundColor: "black",
+        }}
+      />
+      <div
         className={`${styles.elevator} card`}
         style={{
           position: "fixed",
           bottom: `${floor3 * 50 + 10}px`,
-          left: "66%",
+          left: "calc(100% - 250px)",
         }}
       >
         <img
