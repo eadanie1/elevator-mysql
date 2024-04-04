@@ -4,6 +4,7 @@ import "./App.css";
 import ElevatorStatus from "./components/ElevatorStatus";
 import { Elevator } from "./types/types";
 import FloorLines from "./components/FloorLines";
+import CallElevator from "./components/CallElevator";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
@@ -11,6 +12,7 @@ function App() {
   const [floor1, setFloor1] = useState<number | null>(null);
   const [floor2, setFloor2] = useState<number | null>(null);
   const [floor3, setFloor3] = useState<number | null>(null);
+  // const onSubmit = () => void;
 
   useEffect(() => {
     if (elevators.length > 0) {
@@ -76,8 +78,6 @@ function App() {
   //     });
   // }, []);
 
-  console.log(elevators);
-
   return (
     <>
       <ElevatorStatus
@@ -85,7 +85,9 @@ function App() {
         floor1={floor1}
         floor2={floor2}
         floor3={floor3}
+        // onSubmit={onSubmit}
       />
+      {/* <CallElevator /> */}
       <FloorLines />
       <small
         style={{ position: "fixed", bottom: "26px", left: "50%", zIndex: "-1" }}

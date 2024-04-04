@@ -1,11 +1,22 @@
 .elevator {
   background-color: rgb(66, 66, 66) !important;
   border: 3px solid grey !important;
-  color: rgb(32, 218, 110) !important;
+}
+
+h5 {
+  color: black !important;
+}
+
+.status {
+  color: goldenrod;
+}
+
+.destination {
+  color: rgb(255, 0, 55) !important;
 }
 
 .current {
-  color: rgb(255, 0, 55) !important;
+  color: rgb(32, 218, 110) !important;
   margin: 0;
 }
 
