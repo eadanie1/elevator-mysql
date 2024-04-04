@@ -2,5 +2,9 @@
   max-width: 1280px;
   padding: 2rem;
   text-align: center;
-  color: goldenrod;
+  color: black;
+}
+
+small {
+  font-style: italic;
 }

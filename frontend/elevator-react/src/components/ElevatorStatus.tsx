@@ -1,6 +1,5 @@
 import { Elevator } from "../types/types";
 import styles from "../styles/elevatorStatus.module.css";
-import ElevatorCables from "./ElevatorCables";
 
 interface ESProps {
   elevators: Elevator[];
@@ -18,9 +17,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(33.33% - 150px)",
+          left: "calc(33.33% - 172px)",
           width: "3px",
-          height: `calc(100% - ${floor1 * 50 + 365}px)`,
+          height: `calc(100% - ${floor1 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -28,9 +27,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(33.33% - 130px)",
+          left: "calc(33.33% - 152px)",
           width: "3px",
-          height: `calc(100% - ${floor1 * 50 + 365}px)`,
+          height: `calc(100% - ${floor1 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -42,12 +41,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
           left: "calc(33.33% - 230px)",
         }}
       >
-        <img
-          src={`/src/images/elevator-image.jpg`}
-          className="card-img-top"
-          style={{ width: "170px" }}
-          alt={`Elevator image`}
-        />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[0]?.id}</h5>
           <p>Status: {elevators[0]?.status}</p>
@@ -73,9 +66,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(66.66% - 160px)",
+          left: "calc(66.66% - 182px)",
           width: "3px",
-          height: `calc(100% - ${floor2 * 50 + 365}px)`,
+          height: `calc(100% - ${floor2 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -83,9 +76,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(66.66% - 140px)",
+          left: "calc(66.66% - 162px)",
           width: "3px",
-          height: `calc(100% - ${floor2 * 50 + 365}px)`,
+          height: `calc(100% - ${floor2 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -97,12 +90,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
           left: "calc(66.66% - 240px)",
         }}
       >
-        <img
-          src={`/src/images/elevator-image.jpg`}
-          className="card-img-top"
-          style={{ width: "170px" }}
-          alt={`Elevator image`}
-        />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[1]?.id}</h5>
           <p>Status: {elevators[1]?.status}</p>
@@ -128,9 +115,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(100% - 170px)",
+          left: "calc(100% - 195px)",
           width: "3px",
-          height: `calc(100% - ${floor3 * 50 + 365}px)`,
+          height: `calc(100% - ${floor3 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -138,9 +125,9 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(100% - 150px)",
+          left: "calc(100% - 175px)",
           width: "3px",
-          height: `calc(100% - ${floor3 * 50 + 365}px)`,
+          height: `calc(100% - ${floor3 * 50 + 250}px)`,
           backgroundColor: "black",
         }}
       />
@@ -152,12 +139,6 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
           left: "calc(100% - 250px)",
         }}
       >
-        <img
-          src={`/src/images/elevator-image.jpg`}
-          className="card-img-top"
-          style={{ width: "170px" }}
-          alt={`Elevator image`}
-        />
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[2]?.id}</h5>
           <p>Status: {elevators[2]?.status}</p>

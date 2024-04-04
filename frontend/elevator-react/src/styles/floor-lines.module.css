@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background-color:goldenrod; 
+  background-color:black; 
   z-index: -1;
 }
 
@@ -14,7 +14,7 @@
 
 .lineText1 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 0px;
   padding-left: 20px;
@@ -26,7 +26,7 @@
 
 .lineText2 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 50px;
   padding-left: 20px;
@@ -38,7 +38,7 @@
 
 .lineText3 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 100px;
   padding-left: 20px;
@@ -50,7 +50,7 @@
 
 .lineText4 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 150px;
   padding-left: 20px;
@@ -62,7 +62,7 @@
 
 .lineText5 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 200px;
   padding-left: 20px;
@@ -74,7 +74,7 @@
 
 .lineText6 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 250px;
   padding-left: 20px;
@@ -86,7 +86,7 @@
 
 .lineText7 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 300px;
   padding-left: 20px;
@@ -98,7 +98,7 @@
 
 .lineText8 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 350px;
   padding-left: 20px;
@@ -110,7 +110,7 @@
 
 .lineText9 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 400px;
   padding-left: 20px;
@@ -122,7 +122,7 @@
 
 .lineText10 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 450px;
   padding-left: 20px;
@@ -134,7 +134,7 @@
 
 .lineText11 {
   font-size: 26px;
-  color: goldenrod;
+  color: black;
   position: fixed;
   bottom: 500px;
   padding-left: 20px;
