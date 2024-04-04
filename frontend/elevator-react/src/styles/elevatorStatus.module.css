@@ -1,16 +1,15 @@
 .elevator {
-  background-color: rgb(7, 48, 48) !important;
-  border: 3px solid goldenrod !important;
-  border-radius: 8px !important;
-  color: goldenrod !important;
+  background-color: rgb(66, 66, 66) !important;
+  border: 3px solid grey !important;
+  color: rgb(32, 218, 110) !important;
 }
 
 .current {
-  color: deepskyblue !important;
+  color: rgb(255, 0, 55) !important;
   margin: 0;
 }
 
 select {
-  background-color: goldenrod !important;
-  border-color: rgb(247, 215, 134)  !important;
+  background-color: lightgrey !important;
+  border-color: black  !important;
 }

@@ -55,26 +55,26 @@ function App() {
   //     });
   // }, []);
 
-  useEffect(() => {
-    // change to dynamically reading from CallElevator once form setup
-    const floors = [0, 1, 2];
+  // useEffect(() => {
+  //   // change to dynamically reading from CallElevator once form setup
+  //   // const floors = [0, 1, 2];
 
-    // also debug what double call is about in backend server
-    axios
-      .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
-      .then((res) => {
-        // if (id === 1) {
-        //   setFloor1(floor);
-        // } else if (id === 2) {
-        //   setFloor2(floor);
-        // } else if (id === 3) {
-        //   setFloor3(floor);
-        // }
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
-  }, []);
+  //   // also debug what double call is about in backend server
+  //   axios
+  //     .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
+  //     .then((res) => {
+  //       // if (id === 1) {
+  //       //   setFloor1(floor);
+  //       // } else if (id === 2) {
+  //       //   setFloor2(floor);
+  //       // } else if (id === 3) {
+  //       //   setFloor3(floor);
+  //       // }
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message);
+  //     });
+  // }, []);
 
   console.log(elevators);
 
