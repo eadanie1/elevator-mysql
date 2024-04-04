@@ -1,15 +1,28 @@
 import { Elevator } from "../types/types";
 import styles from "../styles/elevatorStatus.module.css";
+import UpdateStatus from "./UpdateStatus";
+import { useForm } from "react-hook-form";
 
 interface ESProps {
   elevators: Elevator[];
   floor1: number;
   floor2: number;
   floor3: number;
+  onSubmit: () => void;
 }
 
-const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
-  console.log(elevators);
+const ElevatorStatus = ({
+  elevators,
+  floor1,
+  floor2,
+  floor3,
+  onSubmit,
+}: ESProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   return (
     <div className="postition-relative">
@@ -43,19 +56,12 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
       >
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[0]?.id}</h5>
-          <p>Status: {elevators[0]?.status}</p>
-          <p>Destination: {elevators[0]?.destinationFloor}</p>
-          <div className="d-flex justify-content-between mt-2">
-            <form action="">
-              <label htmlFor="" className="form-label"></label>
-              <select name="" id="" className="form-select"></select>
-            </form>
-            {/* <button key={`swap-${e.id}`} className={` btn`}>
-                      Swap
-                      </button>
-                      <button key={`delete-${e.id}`} className={` btn`}>
-                      Delete
-                    </button> */}
+          <p className={`${styles.status}`}>Status: {elevators[0]?.status}</p>
+          <p className={`${styles.destination}`}>
+            Destination: {elevators[0]?.destinationFloor}
+          </p>
+          <div className="d-flex flex-column">
+            <UpdateStatus onSubmit={onSubmit} />
           </div>
           <p className={`${styles.current}`}>
             Current: {elevators[0]?.currentFloor}
@@ -92,19 +98,12 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
       >
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[1]?.id}</h5>
-          <p>Status: {elevators[1]?.status}</p>
-          <p>Destination: {elevators[1]?.destinationFloor}</p>
-          <div className="d-flex justify-content-between mt-2">
-            <form action="">
-              <label htmlFor="" className="form-label"></label>
-              <select name="" id="" className="form-select"></select>
-            </form>
-            {/* <button key={`swap-${e.id}`} className={` btn`}>
-                      Swap
-                      </button>
-                      <button key={`delete-${e.id}`} className={` btn`}>
-                      Delete
-                    </button> */}
+          <p className={`${styles.status}`}>Status: {elevators[1]?.status}</p>
+          <p className={`${styles.destination}`}>
+            Destination: {elevators[1]?.destinationFloor}
+          </p>
+          <div className="d-flex flex-column">
+            <UpdateStatus onSubmit={onSubmit} />
           </div>
           <p className={`${styles.current}`}>
             Current: {elevators[1]?.currentFloor}
@@ -141,19 +140,12 @@ const ElevatorStatus = ({ elevators, floor1, floor2, floor3 }: ESProps) => {
       >
         <div className={`card-body d-flex flex-column justify-content-between`}>
           <h5 className="card-title">Elevator {elevators[2]?.id}</h5>
-          <p>Status: {elevators[2]?.status}</p>
-          <p>Destination: {elevators[2]?.destinationFloor}</p>
-          <div className="d-flex justify-content-between mt-2">
-            <form action="">
-              <label htmlFor="" className="form-label"></label>
-              <select name="" id="" className="form-select"></select>
-            </form>
-            {/* <button key={`swap-${e.id}`} className={` btn`}>
-                      Swap
-                      </button>
-                      <button key={`delete-${e.id}`} className={` btn`}>
-                      Delete
-                    </button> */}
+          <p className={`${styles.status}`}>Status: {elevators[2]?.status}</p>
+          <p className={`${styles.destination}`}>
+            Destination: {elevators[2]?.destinationFloor}
+          </p>
+          <div className="d-flex flex-column">
+            <UpdateStatus onSubmit={onSubmit} />
           </div>
           <p className={`${styles.current}`}>
             Current: {elevators[2]?.currentFloor}

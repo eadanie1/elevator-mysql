@@ -5,3 +5,7 @@ export interface Elevator {
   status: string;
   destinationFloor: number;
 }
+
+export interface PropDrill {
+  onSubmit: () => void;
+}
