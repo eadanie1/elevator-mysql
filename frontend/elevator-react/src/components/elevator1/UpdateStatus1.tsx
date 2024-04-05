@@ -9,12 +9,14 @@ interface USProps {
 const UpdateStatus1 = ({ onSubmit, elevators }: USProps) => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const handleSelect = (data: FormData) => {
     onSubmit(data);
+    reset();
   };
 
   return (
