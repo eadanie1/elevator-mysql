@@ -6,6 +6,10 @@ export interface Elevator {
   destinationFloor: number;
 }
 
-export interface PropDrill {
-  onSubmit: () => void;
+export interface FormData {
+  floor: number;
+}
+
+export interface SelectData {
+  floor: number;
 }

@@ -9,15 +9,17 @@ h5 {
 
 .status {
   color: goldenrod;
+  margin: 0;
 }
 
 .destination {
   color: rgb(255, 0, 55) !important;
+  margin: 0 0 8px 0;
 }
 
 .current {
   color: rgb(32, 218, 110) !important;
-  margin: 0;
+  margin: 10px 0 0 0;
 }
 
 select {
