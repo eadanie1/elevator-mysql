@@ -14,9 +14,9 @@ function App() {
   const [floor1, setFloor1] = useState<number | null>(null);
   const [floor2, setFloor2] = useState<number | null>(null);
   const [floor3, setFloor3] = useState<number | null>(null);
-  const [update1, setUpdate1] = useState({});
-  const [update2, setUpdate2] = useState({});
-  const [update3, setUpdate3] = useState({});
+  const [update1, setUpdate1] = useState(null);
+  const [update2, setUpdate2] = useState(null);
+  const [update3, setUpdate3] = useState(null);
 
   useEffect(() => {
     if (elevators.length > 0) {
@@ -39,51 +39,81 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // change to dynamically reading from UpdateStatus once form setup
-    // const id = 1;
-    // const id = 2;
-    // const id = 3;
-    // const floor = 0;
-    // change to dynamically reading from UpdateStatus once form setup
-    let id = null;
-    let floor = null;
+    if (update1 || update2 || update3) {
+      let id = null;
+      let floor = null;
 
-    if (update2) {
-      id = 2;
-      floor = update2.floor;
-      // if (update1) {
-      //   id = 1;
-      //   floor = update1.floor;
-      // } else if (update2) {
-      //   id = 2;
-      //   floor = update2.floor;
-      // } else if (update3) {
-      //   id = 3;
-      //   floor = update3.floor;
+      if (update1) {
+        id = 1;
+        floor = Number(update1.floor);
+        setElevators(
+          elevators.map((e) =>
+            e.id === 1
+              ? {
+                  ...e,
+                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
+                  destinationFloor: floor,
+                }
+              : e
+          )
+        );
+      } else if (update2) {
+        id = 2;
+        floor = Number(update2.floor);
+        setElevators(
+          elevators.map((e) =>
+            e.id === 2
+              ? {
+                  ...e,
+                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
+                  destinationFloor: floor,
+                }
+              : e
+          )
+        );
+      } else if (update3) {
+        id = 3;
+        floor = Number(update3.floor);
+        setElevators(
+          elevators.map((e) =>
+            e.id === 3
+              ? {
+                  ...e,
+                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
+                  destinationFloor: floor,
+                }
+              : e
+          )
+        );
+      }
+
+      axios
+        .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
+        .then((res) => {
+          if (id === 1) {
+            setElevators(
+              elevators.map((e) => (e.id === res.data.id ? res.data : e))
+            );
+            // setFloor1(floor);
+            setUpdate1(null);
+          } else if (id === 2) {
+            setElevators(
+              elevators.map((e) => (e.id === res.data.id ? res.data : e))
+            );
+            // setFloor2(floor);
+            setUpdate2(null);
+          } else if (id === 3) {
+            setElevators(
+              elevators.map((e) => (e.id === res.data.id ? res.data : e))
+            );
+            // setFloor3(floor);
+            setUpdate3(null);
+          }
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
     }
-
-    // console.log(update2);
-
-    console.log(id);
-    console.log(floor);
-
-    axios
-      .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
-      .then((res) => {
-        if (id === 1) {
-          setFloor1(floor);
-          setUpdate1(null);
-        } else if (id === 2) {
-          setFloor2(floor);
-          setUpdate2(null);
-        } else if (id === 3) {
-          setFloor3(floor);
-          setUpdate3(null);
-        }
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
   }, [update1, update2, update3]);
 
   // useEffect(() => {
@@ -116,8 +146,6 @@ function App() {
   };
 
   const handleFormSubmit3 = (data: SelectData) => {
-    console.log(data);
-
     setUpdate3(data);
   };
 
