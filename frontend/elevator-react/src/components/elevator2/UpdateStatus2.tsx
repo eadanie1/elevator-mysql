@@ -1,23 +1,27 @@
 import { useForm } from "react-hook-form";
+import { Elevator, SelectData } from "../../types/types";
 
 interface USProps {
-  onSubmit: () => void;
+  onSubmit: (data: SelectData) => void;
+  elevators: Elevator[];
 }
 
-const UpdateStatus = ({ onSubmit }: USProps) => {
+const UpdateStatus2 = ({ onSubmit, elevators }: USProps) => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleSelect = () => {
-    onSubmit();
+  const handleSelect = (data: SelectData) => {
+    onSubmit(data);
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(handleSelect)}>
-      <select name="" id="" className="form-select">
+      <select {...register("floor")} name="floor" id="" className="form-select">
         <option value="" hidden></option>
         <option value="0">0</option>
         <option value="1">1</option>
@@ -42,4 +46,4 @@ const UpdateStatus = ({ onSubmit }: USProps) => {
   );
 };
 
-export default UpdateStatus;
+export default UpdateStatus2;
