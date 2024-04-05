@@ -50,9 +50,19 @@ const Elevator1 = ({ elevators, floor1, onSubmit }: ESProps) => {
           left: "calc(33.33% - 230px)",
         }}
       >
-        <div className={`card-body d-flex flex-column justify-content-between`}>
+        <div
+          className={`card-body d-flex flex-column justify-content-between`}
+          style={{ width: "132px" }}
+        >
           <h5 className="card-title">Elevator {elevators[0]?.id}</h5>
-          <p className={`${styles.status}`}>Status: {elevators[0]?.status}</p>
+          <p
+            className={`${styles.status}`}
+            style={
+              elevators[0]?.status === "idle" ? { paddingBottom: "24px" } : {}
+            }
+          >
+            Status: {elevators[0]?.status}
+          </p>
           <p className={`${styles.destination}`}>
             Destination: {elevators[0]?.destinationFloor}
           </p>

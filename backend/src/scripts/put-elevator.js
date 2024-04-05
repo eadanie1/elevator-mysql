@@ -55,9 +55,12 @@ export async function updateElevatorStatus(id, destinationFloor, req, res) {
           destinationFloor = 0
         WHERE id = ${id}
       `);
+
+      const updatedElevator = {...foundElevator[0][0], currentFloor: destinationFloor};
       
       console.log(`Elevator ${id} has reached floor ${destinationFloor}`);
-      res.json(`Elevator ${id} has reached floor ${destinationFloor}`);
+      // res.json(`Elevator ${id} has reached floor ${destinationFloor}`);
+      res.json(updatedElevator);
     });
   } catch(error) {
     console.error('Could not perform task', error)
@@ -69,8 +72,8 @@ export const putRoutes = [
     path: '/api/elevators/set-floor/:id/:floor',
     handler: async (req, res) => {
       try {
-        const id = parseInt(req.params.id);
-        const destinationFloor = parseInt(req.params.floor);
+        const id = req.params.id;
+        const destinationFloor = req.params.floor;
         await updateElevatorStatus(id, destinationFloor, req, res);
       }
       catch(error) {

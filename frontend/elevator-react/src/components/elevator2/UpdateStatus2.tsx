@@ -22,7 +22,9 @@ const UpdateStatus2 = ({ onSubmit, elevators }: USProps) => {
   return (
     <form onSubmit={handleSubmit(handleSelect)}>
       <select {...register("floor")} name="floor" id="" className="form-select">
-        <option value="" hidden></option>
+        <option value="" hidden>
+          Floor
+        </option>
         <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
