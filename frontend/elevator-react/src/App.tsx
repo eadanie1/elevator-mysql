@@ -6,17 +6,17 @@ import Elevator2 from "./components/elevator2/Elevator2";
 import Elevator3 from "./components/elevator3/Elevator3";
 import { Elevator, SelectData } from "./types/types";
 import FloorLines from "./components/FloorLines";
-import CallElevator from "./components/CallElevator";
+import CallElevator, { FormSubmitData } from "./components/CallElevator";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
   const [error, setError] = useState(null);
-  const [floor1, setFloor1] = useState<number | null>(null);
-  const [floor2, setFloor2] = useState<number | null>(null);
-  const [floor3, setFloor3] = useState<number | null>(null);
-  const [update1, setUpdate1] = useState(null);
-  const [update2, setUpdate2] = useState(null);
-  const [update3, setUpdate3] = useState(null);
+  const [floor1, setFloor1] = useState<number>(0);
+  const [floor2, setFloor2] = useState<number>(0);
+  const [floor3, setFloor3] = useState<number>(0);
+  const [update1, setUpdate1] = useState<SelectData | null>(null);
+  const [update2, setUpdate2] = useState<SelectData | null>(null);
+  const [update3, setUpdate3] = useState<SelectData | null>(null);
 
   useEffect(() => {
     if (elevators.length > 0) {
@@ -40,8 +40,8 @@ function App() {
 
   useEffect(() => {
     if (update1 || update2 || update3) {
-      let id = null;
-      let floor = null;
+      let id = 0;
+      let floor = 0;
 
       if (update1) {
         id = 1;
@@ -94,19 +94,16 @@ function App() {
             setElevators(
               elevators.map((e) => (e.id === res.data.id ? res.data : e))
             );
-            // setFloor1(floor);
             setUpdate1(null);
           } else if (id === 2) {
             setElevators(
               elevators.map((e) => (e.id === res.data.id ? res.data : e))
             );
-            // setFloor2(floor);
             setUpdate2(null);
           } else if (id === 3) {
             setElevators(
               elevators.map((e) => (e.id === res.data.id ? res.data : e))
             );
-            // setFloor3(floor);
             setUpdate3(null);
           }
         })
@@ -137,16 +134,20 @@ function App() {
   //     });
   // }, []);
 
-  const handleFormSubmit1 = (data: SelectData) => {
+  const handleSelectSubmit1 = (data: SelectData) => {
     setUpdate1(data);
   };
 
-  const handleFormSubmit2 = (data: SelectData) => {
+  const handleSelectSubmit2 = (data: SelectData) => {
     setUpdate2(data);
   };
 
-  const handleFormSubmit3 = (data: SelectData) => {
+  const handleSelectSubmit3 = (data: SelectData) => {
     setUpdate3(data);
+  };
+
+  const handleFormSubmit = (data: FormSubmitData) => {
+    console.log(data);
   };
 
   return (
@@ -154,19 +155,19 @@ function App() {
       <Elevator1
         elevators={elevators}
         floor1={floor1}
-        onSubmit={handleFormSubmit1}
+        onSubmit={handleSelectSubmit1}
       />
       <Elevator2
         elevators={elevators}
         floor2={floor2}
-        onSubmit={handleFormSubmit2}
+        onSubmit={handleSelectSubmit2}
       />
       <Elevator3
         elevators={elevators}
         floor3={floor3}
-        onSubmit={handleFormSubmit3}
+        onSubmit={handleSelectSubmit3}
       />
-      {/* <CallElevator /> */}
+      <CallElevator onSubmit={handleFormSubmit} />
       <FloorLines />
       <small
         style={{ position: "fixed", bottom: "26px", left: "50%", zIndex: "-1" }}

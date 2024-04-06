@@ -1,22 +1,15 @@
-import { Elevator } from "../../types/types";
+import { Elevator, SelectData } from "../../types/types";
 import styles from "../../styles/elevatorStatus.module.css";
-import { useForm } from "react-hook-form";
 import UpdateStatus1 from "./UpdateStatus1";
 
 interface ESProps {
   elevators: Elevator[];
   floor1: number;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: SelectData) => void;
 }
 
 const Elevator1 = ({ elevators, floor1, onSubmit }: ESProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const handleFormSubmit = (data: FormData) => {
+  const handleFormSubmit = (data: SelectData) => {
     onSubmit(data);
   };
 
@@ -67,7 +60,7 @@ const Elevator1 = ({ elevators, floor1, onSubmit }: ESProps) => {
             Destination: {elevators[0]?.destinationFloor}
           </p>
           <div className="d-flex flex-column">
-            <UpdateStatus1 elevators={elevators} onSubmit={handleFormSubmit} />
+            <UpdateStatus1 onSubmit={handleFormSubmit} />
           </div>
           <p className={`${styles.current}`}>
             Current: {elevators[0]?.currentFloor}
