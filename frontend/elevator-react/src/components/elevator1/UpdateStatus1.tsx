@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Elevator } from "../../types/types";
+import { SelectData } from "../../types/types";
 
 interface USProps {
-  onSubmit: () => void;
-  elevators: Elevator[];
+  onSubmit: (data: SelectData) => void;
 }
 
-const UpdateStatus1 = ({ onSubmit, elevators }: USProps) => {
+const UpdateStatus1 = ({ onSubmit }: USProps) => {
   const {
     register,
     reset,
@@ -14,14 +13,19 @@ const UpdateStatus1 = ({ onSubmit, elevators }: USProps) => {
     formState: { errors },
   } = useForm();
 
-  const handleSelect = (data: FormData) => {
+  const handleSelect = (data: SelectData) => {
     onSubmit(data);
     reset();
   };
 
   return (
     <form onSubmit={handleSubmit(handleSelect)}>
-      <select {...register("floor")} name="floor" id="" className="form-select">
+      <select
+        {...register("floor", { required: true })}
+        name="floor"
+        id=""
+        className="form-select"
+      >
         <option value="" hidden>
           Floor
         </option>
@@ -37,6 +41,7 @@ const UpdateStatus1 = ({ onSubmit, elevators }: USProps) => {
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
+      {errors.floor && <p className="text-danger">Please select a floor</p>}
       <button
         style={{ width: "100%" }}
         type="submit"

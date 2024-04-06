@@ -1,6 +1,5 @@
 import { Elevator, SelectData } from "../../types/types";
 import styles from "../../styles/elevatorStatus.module.css";
-import { useForm } from "react-hook-form";
 import UpdateStatus3 from "./UpdateStatus3";
 
 interface ESProps {
@@ -10,12 +9,6 @@ interface ESProps {
 }
 
 const Elevator3 = ({ elevators, floor3, onSubmit }: ESProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   const handleFormSubmit = (data: SelectData) => {
     onSubmit(data);
   };
