@@ -60,7 +60,7 @@ export async function updateElevatorStatus(id, destinationFloor, req, res) {
       
       console.log(`Elevator ${id} has reached floor ${destinationFloor}`);
       // res.json(`Elevator ${id} has reached floor ${destinationFloor}`);
-      res.json(updatedElevator);
+      return res.json(updatedElevator);
     });
   } catch(error) {
     console.error('Could not perform task', error)
