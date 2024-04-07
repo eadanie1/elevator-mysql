@@ -36,7 +36,7 @@ getRoutes.forEach(route => {
 });
 
 putRoutes.forEach(route => {
-  app.put(route.path, route.handler);
+  app.patch(route.path, route.handler);
 });
 
 app.post('/api/elevators/call', callElevatorRouteHandler);

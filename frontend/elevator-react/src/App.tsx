@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import "./App.css";
+import { useEffect, useState } from "react";
 import Elevator1 from "./components/elevator1/Elevator1";
 import Elevator2 from "./components/elevator2/Elevator2";
 import Elevator3 from "./components/elevator3/Elevator3";
 import { Elevator, SelectData } from "./types/types";
 import FloorLines from "./components/FloorLines";
 import CallElevator, { FormSubmitData } from "./components/CallElevator";
+import elevatorService from "./services/elevatorService";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
@@ -29,8 +29,8 @@ function App() {
   }, [elevators]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/elevators")
+    const { request, cancel } = elevatorService.getAll("/");
+    request
       .then((res) => {
         setElevators([...res.data]);
       })
@@ -38,6 +38,7 @@ function App() {
         console.log(err);
         setError(err.message);
       });
+    return () => cancel();
   }, [tempUpdate, floors]);
 
   useEffect(() => {
@@ -59,8 +60,8 @@ function App() {
         setTempUpdate(true);
       }
 
-      axios
-        .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
+      elevatorService
+        .update(`/set-floor/${id}/${floor}`)
         .then((res) => {
           if (id === 1) {
             setUpdate1(null);
@@ -83,8 +84,8 @@ function App() {
     if (floors.length > 0) {
       setTempUpdate(true);
 
-      axios
-        .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
+      elevatorService
+        .editSeveral(`/call`, { floors: floors })
         .then((res) => {
           setTempUpdate(false);
           // if (id === 1) {
