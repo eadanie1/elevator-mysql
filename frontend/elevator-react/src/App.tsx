@@ -17,6 +17,8 @@ function App() {
   const [update1, setUpdate1] = useState<SelectData | null>(null);
   const [update2, setUpdate2] = useState<SelectData | null>(null);
   const [update3, setUpdate3] = useState<SelectData | null>(null);
+  const [tempUpdate, setTempUpdate] = useState<boolean>(false);
+  const [floors, setFloors] = useState<number[]>([]);
 
   useEffect(() => {
     if (elevators.length > 0) {
@@ -36,7 +38,7 @@ function App() {
         console.log(err);
         setError(err.message);
       });
-  }, []);
+  }, [tempUpdate, floors]);
 
   useEffect(() => {
     if (update1 || update2 || update3) {
@@ -46,65 +48,29 @@ function App() {
       if (update1) {
         id = 1;
         floor = Number(update1.floor);
-        setElevators(
-          elevators.map((e) =>
-            e.id === 1
-              ? {
-                  ...e,
-                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
-                  destinationFloor: floor,
-                }
-              : e
-          )
-        );
+        setTempUpdate(true);
       } else if (update2) {
         id = 2;
         floor = Number(update2.floor);
-        setElevators(
-          elevators.map((e) =>
-            e.id === 2
-              ? {
-                  ...e,
-                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
-                  destinationFloor: floor,
-                }
-              : e
-          )
-        );
+        setTempUpdate(true);
       } else if (update3) {
         id = 3;
         floor = Number(update3.floor);
-        setElevators(
-          elevators.map((e) =>
-            e.id === 3
-              ? {
-                  ...e,
-                  status: e.currentFloor < floor ? "moving_up" : "moving_down",
-                  destinationFloor: floor,
-                }
-              : e
-          )
-        );
+        setTempUpdate(true);
       }
 
       axios
         .put(`http://localhost:3000/api/elevators/set-floor/${id}/${floor}`)
         .then((res) => {
           if (id === 1) {
-            setElevators(
-              elevators.map((e) => (e.id === res.data.id ? res.data : e))
-            );
             setUpdate1(null);
+            setTempUpdate(false);
           } else if (id === 2) {
-            setElevators(
-              elevators.map((e) => (e.id === res.data.id ? res.data : e))
-            );
             setUpdate2(null);
+            setTempUpdate(false);
           } else if (id === 3) {
-            setElevators(
-              elevators.map((e) => (e.id === res.data.id ? res.data : e))
-            );
             setUpdate3(null);
+            setTempUpdate(false);
           }
         })
         .catch((err) => {
@@ -113,26 +79,29 @@ function App() {
     }
   }, [update1, update2, update3]);
 
-  // useEffect(() => {
-  //   // change to dynamically reading from CallElevator once form setup
-  //   // const floors = [0, 1, 2];
+  useEffect(() => {
+    if (floors.length > 0) {
+      setTempUpdate(true);
 
-  //   // also debug what double call is about in backend server
-  //   axios
-  //     .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
-  //     .then((res) => {
-  //       // if (id === 1) {
-  //       //   setFloor1(floor);
-  //       // } else if (id === 2) {
-  //       //   setFloor2(floor);
-  //       // } else if (id === 3) {
-  //       //   setFloor3(floor);
-  //       // }
-  //     })
-  //     .catch((err) => {
-  //       setError(err.message);
-  //     });
-  // }, []);
+      axios
+        .post(`http://localhost:3000/api/elevators/call`, { floors: floors })
+        .then((res) => {
+          setTempUpdate(false);
+          // if (id === 1) {
+          //   setFloor1(floor);
+          // } else if (id === 2) {
+          //   setFloor2(floor);
+          // } else if (id === 3) {
+          //   setFloor3(floor);
+          // }
+          setFloors([]);
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    }
+    // setTempUpdate(false);
+  }, [floors]);
 
   const handleSelectSubmit1 = (data: SelectData) => {
     setUpdate1(data);
@@ -147,7 +116,9 @@ function App() {
   };
 
   const handleFormSubmit = (data: FormSubmitData) => {
-    console.log(data);
+    const floorsArray = data.floors.split(",").map((f) => Number(f));
+    console.log(floorsArray);
+    setFloors(floorsArray);
   };
 
   return (
