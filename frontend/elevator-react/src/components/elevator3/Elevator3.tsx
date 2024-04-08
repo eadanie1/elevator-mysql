@@ -19,7 +19,7 @@ const Elevator3 = ({ elevators, floor3, onSubmit }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(100% - 195px)",
+          left: "calc(100% - 190px)",
           width: "3px",
           height: `calc(100% - ${floor3 * 50 + 240}px)`,
           backgroundColor: "black",
@@ -29,7 +29,7 @@ const Elevator3 = ({ elevators, floor3, onSubmit }: ESProps) => {
         style={{
           position: "absolute",
           top: "0",
-          left: "calc(100% - 175px)",
+          left: "calc(100% - 170px)",
           width: "3px",
           height: `calc(100% - ${floor3 * 50 + 240}px)`,
           backgroundColor: "black",
