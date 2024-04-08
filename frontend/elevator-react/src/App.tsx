@@ -17,29 +17,29 @@ function App() {
   const [update1, setUpdate1] = useState<SelectData | null>(null);
   const [update2, setUpdate2] = useState<SelectData | null>(null);
   const [update3, setUpdate3] = useState<SelectData | null>(null);
-  const [tempUpdate, setTempUpdate] = useState<boolean>(false);
   const [floors, setFloors] = useState<number[]>([]);
 
-  useEffect(() => {
-    if (elevators.length > 0) {
-      setFloor1(elevators[0]?.currentFloor);
-      setFloor2(elevators[1]?.currentFloor);
-      setFloor3(elevators[2]?.currentFloor);
-    }
-  }, [elevators]);
-
-  useEffect(() => {
+  const fetchData = () => {
     const { request, cancel } = elevatorService.getAll("/");
     request
       .then((res) => {
-        setElevators([...res.data]);
+        setElevators(res.data);
+        setFloor1(res.data[0]?.currentFloor);
+        setFloor2(res.data[1]?.currentFloor);
+        setFloor3(res.data[2]?.currentFloor);
+        setError(null);
       })
       .catch((err) => {
-        console.log(err);
         setError(err.message);
       });
-    return () => cancel();
-  }, [tempUpdate, floors]);
+  };
+
+  useEffect(() => {
+    fetchData();
+    const intervalId = setInterval(fetchData, 300);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     if (update1 || update2 || update3) {
@@ -49,15 +49,12 @@ function App() {
       if (update1) {
         id = 1;
         floor = Number(update1.floor);
-        setTempUpdate(true);
       } else if (update2) {
         id = 2;
         floor = Number(update2.floor);
-        setTempUpdate(true);
       } else if (update3) {
         id = 3;
         floor = Number(update3.floor);
-        setTempUpdate(true);
       }
 
       elevatorService
@@ -65,13 +62,10 @@ function App() {
         .then((res) => {
           if (id === 1) {
             setUpdate1(null);
-            setTempUpdate(false);
           } else if (id === 2) {
             setUpdate2(null);
-            setTempUpdate(false);
           } else if (id === 3) {
             setUpdate3(null);
-            setTempUpdate(false);
           }
         })
         .catch((err) => {
@@ -82,26 +76,15 @@ function App() {
 
   useEffect(() => {
     if (floors.length > 0) {
-      setTempUpdate(true);
-
       elevatorService
         .editSeveral(`/call`, { floors: floors })
         .then((res) => {
-          setTempUpdate(false);
-          // if (id === 1) {
-          //   setFloor1(floor);
-          // } else if (id === 2) {
-          //   setFloor2(floor);
-          // } else if (id === 3) {
-          //   setFloor3(floor);
-          // }
           setFloors([]);
         })
         .catch((err) => {
           setError(err.message);
         });
     }
-    // setTempUpdate(false);
   }, [floors]);
 
   const handleSelectSubmit1 = (data: SelectData) => {
@@ -118,7 +101,6 @@ function App() {
 
   const handleFormSubmit = (data: FormSubmitData) => {
     const floorsArray = data.floors.split(",").map((f) => Number(f));
-    console.log(floorsArray);
     setFloors(floorsArray);
   };
 
@@ -144,7 +126,7 @@ function App() {
       <small
         style={{ position: "fixed", bottom: "26px", left: "50%", zIndex: "-1" }}
       >
-        Icons and images taken from icons8
+        Icons taken from icons8
       </small>
     </>
   );
