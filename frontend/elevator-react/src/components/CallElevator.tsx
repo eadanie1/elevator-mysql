@@ -5,7 +5,9 @@ interface CEProps {
   onSubmit: (data: FormSubmitData) => void;
 }
 
-const schema = z.array(z.number());
+const schema = z.object({
+  floors: z.string().nonempty(),
+});
 
 export type FormSubmitData = z.infer<typeof schema>;
 
@@ -35,11 +37,12 @@ const CallElevator = ({ onSubmit }: CEProps) => {
         Floors
       </label>
       <input
-        {...register("floors")}
+        {...(register("floors"), { required: true })}
         id="floors"
         type="text"
         className="form-control"
       />
+      {errors.floors && <p className="text-danger">{errors.floors.message}</p>}
       <button className="btn btn-secondary" style={{ marginLeft: "8px" }}>
         Call
       </button>
