@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
 
 interface CEProps {
   onSubmit: (data: FormSubmitData) => void;
@@ -17,7 +17,7 @@ const CallElevator = ({ onSubmit }: CEProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormSubmitData>();
 
   const onSubmitHandler = (data: FormSubmitData) => {
     onSubmit(data);
