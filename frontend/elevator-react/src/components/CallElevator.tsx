@@ -37,7 +37,7 @@ const CallElevator = ({ onSubmit }: CEProps) => {
         Floors
       </label>
       <input
-        {...(register("floors"), { required: true })}
+        {...register("floors")}
         id="floors"
         type="text"
         className="form-control"
