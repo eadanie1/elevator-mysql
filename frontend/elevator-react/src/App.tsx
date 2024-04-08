@@ -32,13 +32,17 @@ function App() {
       .catch((err) => {
         setError(err.message);
       });
+    return cancel;
   };
 
   useEffect(() => {
-    fetchData();
+    const cancel = fetchData();
     const intervalId = setInterval(fetchData, 300);
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+      cancel();
+    };
   }, []);
 
   useEffect(() => {
