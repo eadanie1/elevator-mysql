@@ -1,20 +1,24 @@
 # Elevator API - MySQL (Express.js / React)
 
 ## 1. Project Overview
+
 - **Description:** This project provides endpoints to interact with an elevator control system API using a MySQL database. The backend is built in Node.js using Express.js, while the frontend is developed in React. The API focuses on CRUD operations, particularly reading, updating, and creating different properties of elevator objects.
 
 ## 2. Installation and Setup
 
 ### Backend
+
 #### Requirements:
+
 - Node.js
 - npm packages: axios, express, cors, async-lock, mysql2
 - Development dependencies: gulp
 
 #### Installation:
+
 1. Clone this repository to your local machine:
    ```
-   git clone https://github.com/yourusername/your-repository.git
+   git clone https://github.com/eadanie1/elevator-mysql.git
    ```
 2. Navigate to the project directory:
    ```
@@ -35,12 +39,15 @@
 5. Access the API at http://localhost:3000/api/elevators.
 
 ### Frontend
+
 #### Requirements:
+
 - Node.js
 - npm packages: @hookform/resolvers, axios, bootstrap, react, react-dom, react-hook-form, zod
 - Development dependencies: Vite
 
 #### Installation:
+
 1. Navigate to the frontend folder:
    ```
    cd your-repository/elevator-mysql/frontend/elevator-react
