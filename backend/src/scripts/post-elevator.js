@@ -134,8 +134,8 @@ export async function callElevatorRouteHandler(req, res) {
     }
   
       await callElevator(floors);
-  
-    console.log(`Elevators called for floors ${floors.join(', ')}`);
+      res.status(200).json({ message: `Elevators called for floors ${floors.join(', ')}` });
+    // console.log(`Elevators called for floors ${floors.join(', ')}`);
   } catch(err) {
     console.log('Error', err.message);
     res.status(400).json({ error: err.message });

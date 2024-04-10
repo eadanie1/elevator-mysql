@@ -15,34 +15,9 @@ function App() {
   const [tempUpdate, setTempUpdate] = useState<boolean>(false);
   const [floors, setFloors] = useState<number[]>([]);
 
-  // const fetchData = () => {
-  //   const { request, cancel } = elevatorService.getAll("/");
-  //   request
-  //     .then((res) => {
-  //       setElevators(res.data);
-  //       setFloor1(res.data[0]?.currentFloor);
-  //       setFloor2(res.data[1]?.currentFloor);
-  //       setFloor3(res.data[2]?.currentFloor);
-  //       setError(null);
-  //     })
-  //     .catch((err) => {
-  //       setError(err.message);
-  //     });
-  //   return cancel;
-  // };
-
-  // useEffect(() => {
-  //   const cancel = fetchData();
-  //   const intervalId = setInterval(fetchData, 300);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //     cancel();
-  //   };
-  // }, []);
-
   useEffect(() => {
     const { request, cancel } = elevatorService.getAll("/");
+
     request
       .then((res) => {
         setElevators([...res.data]);
@@ -51,8 +26,21 @@ function App() {
         console.log(err);
         setError(err.message);
       });
+
     return () => cancel();
   }, [tempUpdate, floors]);
+
+  useEffect(() => {
+    const movingElevators = elevators.some(
+      (elevator) => elevator.destinationFloor !== 0
+    );
+
+    if (floors.length > 0 || movingElevators) {
+      setTimeout(() => {
+        setTempUpdate((prev) => !prev);
+      }, 0);
+    }
+  }, [elevators, floors, tempUpdate]);
 
   useEffect(() => {
     if (update1 || update2 || update3) {
