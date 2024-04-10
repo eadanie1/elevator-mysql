@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
-import { SelectData } from "../../types/types";
+import { SelectData } from "../types/types";
 
 interface USProps {
-  onSubmit: (data: SelectData) => void;
+  onSubmit: (data: SelectData, elevatorId: number) => void;
+  elevatorId?: number;
 }
 
-const UpdateStatus2 = ({ onSubmit }: USProps) => {
+const UpdateStatus = ({ onSubmit, elevatorId }: USProps) => {
   const {
     register,
     reset,
@@ -14,7 +15,7 @@ const UpdateStatus2 = ({ onSubmit }: USProps) => {
   } = useForm();
 
   const handleSelect = (data: SelectData) => {
-    onSubmit(data);
+    onSubmit(data, elevatorId!);
     reset();
   };
 
@@ -53,4 +54,4 @@ const UpdateStatus2 = ({ onSubmit }: USProps) => {
   );
 };
 
-export default UpdateStatus2;
+export default UpdateStatus;
