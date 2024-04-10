@@ -1,19 +1,14 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import Elevator1 from "./components/elevator1/Elevator1";
-import Elevator2 from "./components/elevator2/Elevator2";
-import Elevator3 from "./components/elevator3/Elevator3";
 import { Elevator, SelectData } from "./types/types";
 import FloorLines from "./components/FloorLines";
 import CallElevator, { FormSubmitData } from "./components/CallElevator";
 import elevatorService from "./services/elevatorService";
+import Elevators from "./components/Elevators";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
   const [error, setError] = useState(null);
-  const [floor1, setFloor1] = useState<number>(0);
-  const [floor2, setFloor2] = useState<number>(0);
-  const [floor3, setFloor3] = useState<number>(0);
   const [update1, setUpdate1] = useState<SelectData | null>(null);
   const [update2, setUpdate2] = useState<SelectData | null>(null);
   const [update3, setUpdate3] = useState<SelectData | null>(null);
@@ -45,14 +40,6 @@ function App() {
   //     cancel();
   //   };
   // }, []);
-
-  useEffect(() => {
-    if (elevators.length > 0) {
-      setFloor1(elevators[0]?.currentFloor);
-      setFloor2(elevators[1]?.currentFloor);
-      setFloor3(elevators[2]?.currentFloor);
-    }
-  }, [elevators]);
 
   useEffect(() => {
     const { request, cancel } = elevatorService.getAll("/");
@@ -88,7 +75,7 @@ function App() {
 
       elevatorService
         .update(`/set-floor/${id}/${floor}`)
-        .then((res) => {
+        .then((_) => {
           if (id === 1) {
             setUpdate1(null);
             setTempUpdate(false);
@@ -110,7 +97,7 @@ function App() {
     if (floors.length > 0) {
       elevatorService
         .editSeveral(`/call`, { floors: floors })
-        .then((res) => {
+        .then((_) => {
           setFloors([]);
         })
         .catch((err) => {
@@ -119,16 +106,14 @@ function App() {
     }
   }, [floors]);
 
-  const handleSelectSubmit1 = (data: SelectData) => {
-    setUpdate1(data);
-  };
-
-  const handleSelectSubmit2 = (data: SelectData) => {
-    setUpdate2(data);
-  };
-
-  const handleSelectSubmit3 = (data: SelectData) => {
-    setUpdate3(data);
+  const handleSelectSubmit = (data: SelectData, elevatorId: number) => {
+    if (elevatorId === 1) {
+      setUpdate1(data);
+    } else if (elevatorId === 2) {
+      setUpdate2(data);
+    } else if (elevatorId === 3) {
+      setUpdate3(data);
+    }
   };
 
   const handleFormSubmit = (data: FormSubmitData) => {
@@ -138,21 +123,7 @@ function App() {
 
   return (
     <>
-      <Elevator1
-        elevators={elevators}
-        floor1={floor1}
-        onSubmit={handleSelectSubmit1}
-      />
-      <Elevator2
-        elevators={elevators}
-        floor2={floor2}
-        onSubmit={handleSelectSubmit2}
-      />
-      <Elevator3
-        elevators={elevators}
-        floor3={floor3}
-        onSubmit={handleSelectSubmit3}
-      />
+      <Elevators elevators={elevators} onSubmit={handleSelectSubmit} />
       <CallElevator onSubmit={handleFormSubmit} />
       <FloorLines />
       <small
