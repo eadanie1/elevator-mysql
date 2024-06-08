@@ -36,9 +36,10 @@ function App() {
     );
 
     if (floors.length > 0 || movingElevators) {
-      setTimeout(() => {
-        setTempUpdate((prev) => !prev);
-      }, 0);
+      // setTimeout(() => {
+      //   setTempUpdate((prev) => !prev);
+      //   }, 0);
+      setTempUpdate((prev) => !prev);
     }
   }, [elevators, floors, tempUpdate]);
 

@@ -57,7 +57,7 @@ export async function findClosestElevator(floor) {
 
 export async function moveElevator(elevator) {
   try {
-    const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 1000;
+    const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 2500;
     await new Promise(resolve => setTimeout(resolve, moveTime));
     
     await pool.query(`
