@@ -8,7 +8,7 @@ import Elevators from "./components/Elevators";
 
 function App() {
   const [elevators, setElevators] = useState<Elevator[]>([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [update1, setUpdate1] = useState<SelectData | null>(null);
   const [update2, setUpdate2] = useState<SelectData | null>(null);
   const [update3, setUpdate3] = useState<SelectData | null>(null);
@@ -20,11 +20,11 @@ function App() {
 
     request
       .then((res) => {
-        setElevators([...res.data]);
+        setElevators([...res.data] as Elevator[]);
       })
       .catch((err) => {
-        console.log(err);
         setError(err.message);
+        console.log(error);
       });
 
     return () => cancel();

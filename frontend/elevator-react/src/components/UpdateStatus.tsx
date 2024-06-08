@@ -12,9 +12,9 @@ const UpdateStatus = ({ onSubmit, elevatorId }: USProps) => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<SelectData>();
 
-  const handleSelect = (data: SelectData) => {
+  const handleSelect = (data: SelectData): void => {
     onSubmit(data, elevatorId!);
     reset();
   };
