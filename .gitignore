@@ -4,3 +4,4 @@ backend/src/scripts/test-post2.js
 backend/src/scripts/test-post3.js
 
 frontend/elevator-react/node_modules
+*.env

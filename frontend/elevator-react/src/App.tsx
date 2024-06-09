@@ -113,6 +113,10 @@ function App() {
 
   return (
     <>
+      <h2 style={{ fontStyle: "italic" }}>
+        PAGE UNDER CONSTRUCTION - Frontend/backend hosting completed, database
+        hosting with Turso to be setup shortly (as of June 6th, 2024)
+      </h2>
       <Elevators elevators={elevators} onSubmit={handleSelectSubmit} />
       <CallElevator onSubmit={handleFormSubmit} />
       <FloorLines />
