@@ -1,6 +1,7 @@
 
 import axios from 'axios';
-import { pool } from "../../app.js";
+// import { pool } from "../../app.js";
+import { turso } from "../../app.js";
 import asyncLock from 'async-lock';
 const lock = new asyncLock();
 
@@ -11,7 +12,10 @@ export async function findClosestElevator(floor) {
     let closestElevator = null;
     let minDistance = Number.MAX_SAFE_INTEGER;
     
-    const resultsArray = await pool.query(`
+    // const resultsArray = await pool.query(`
+    // SELECT * FROM elevators WHERE status = 'idle'
+    // `);
+    const resultsArray = await turso.execute(`
     SELECT * FROM elevators WHERE status = 'idle'
     `);
     
@@ -34,7 +38,14 @@ export async function findClosestElevator(floor) {
       }
     }
 
-    await pool.query(`
+    // await pool.query(`
+    //   UPDATE elevators
+    //   SET
+    //     status = ${closestElevator.currentFloor < floor ? `'moving_up'` : `'moving_down'`},
+    //     destinationFloor = ${floor}
+    //   WHERE id = ${closestElevator.id}
+    // `);
+    await turso.execute(`
       UPDATE elevators
       SET
         status = ${closestElevator.currentFloor < floor ? `'moving_up'` : `'moving_down'`},
@@ -42,7 +53,10 @@ export async function findClosestElevator(floor) {
       WHERE id = ${closestElevator.id}
     `);
         
-    const closestElevatorResultsArray = await pool.query(`
+    // const closestElevatorResultsArray = await pool.query(`
+    //   SELECT * FROM elevators WHERE id = ${closestElevator.id}
+    // `);
+    const closestElevatorResultsArray = await turso.execute(`
       SELECT * FROM elevators WHERE id = ${closestElevator.id}
     `);
 
@@ -60,7 +74,15 @@ export async function moveElevator(elevator) {
     const moveTime = Math.abs(elevator.destinationFloor - elevator.currentFloor) * 2500;
     await new Promise(resolve => setTimeout(resolve, moveTime));
     
-    await pool.query(`
+    // await pool.query(`
+    // UPDATE elevators
+    // SET
+    // currentFloor = ${elevator.destinationFloor},
+    // status = 'idle',
+    // destinationFloor = 0
+    // WHERE id = ${elevator.id}
+    // `);
+    await turso.execute(`
     UPDATE elevators
     SET
     currentFloor = ${elevator.destinationFloor},

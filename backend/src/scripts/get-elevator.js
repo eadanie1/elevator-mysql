@@ -1,9 +1,11 @@
 
-import { pool } from "../../app.js";
+// import { pool } from "../../app.js";
+import { turso } from "../../app.js";
 
 export async function statusAllElevators(req, res) {
   try {
-    const result = await pool.query('SELECT * FROM elevators');
+    // const result = await pool.query('SELECT * FROM elevators');
+    const result = await turso.execute('SELECT * FROM elevators');
     return result[0];
   }
   catch(error) {
@@ -14,7 +16,10 @@ export async function statusAllElevators(req, res) {
 
 export async function isElevatorAvailable(id, req, res) {
   try {
-    const elevator = await pool.query(`
+    // const elevator = await pool.query(`
+    //   SELECT * FROM elevators WHERE id = ${id}
+    // `);
+    const elevator = await turso.execute(`
       SELECT * FROM elevators WHERE id = ${id}
     `);
     

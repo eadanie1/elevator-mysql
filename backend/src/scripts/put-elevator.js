@@ -1,10 +1,16 @@
 
-import { pool } from "../../app.js";
+// import { pool } from "../../app.js";
+import { turso } from "../../app.js";
 import asyncLock from 'async-lock';
 const lock = new asyncLock();
 
 export async function findElevator(id, destinationFloor, req, res) {
-  const elevator = await pool.query(`
+  // const elevator = await pool.query(`
+  //   SELECT *
+  //   FROM elevators
+  //   WHERE id = ${id}
+  // `);
+  const elevator = await turso.execute(`
     SELECT *
     FROM elevators
     WHERE id = ${id}
@@ -34,7 +40,14 @@ export async function updateElevatorStatus(id, destinationFloor, req, res) {
         return;
       }
       
-      await pool.query(`
+      // await pool.query(`
+      //   UPDATE elevators
+      //   SET
+      //     status = ${foundElevator[0][0].currentFloor < destinationFloor ? `'moving_up'` : `'moving_down'`},
+      //     destinationFloor = ${destinationFloor}
+      //   WHERE id = ${id}
+      // `);
+      await turso.execute(`
         UPDATE elevators
         SET
           status = ${foundElevator[0][0].currentFloor < destinationFloor ? `'moving_up'` : `'moving_down'`},
@@ -47,7 +60,15 @@ export async function updateElevatorStatus(id, destinationFloor, req, res) {
       const moveTime = Math.abs(destinationFloor - foundElevator[0][0].currentFloor) * 1000;
       await new Promise(resolve => setTimeout(resolve, moveTime));
       
-      await pool.query(`
+      // await pool.query(`
+      //   UPDATE elevators
+      //   SET
+      //     currentFloor = ${destinationFloor},
+      //     status = 'idle',
+      //     destinationFloor = 0
+      //   WHERE id = ${id}
+      // `);
+      await turso.execute(`
         UPDATE elevators
         SET
           currentFloor = ${destinationFloor},
