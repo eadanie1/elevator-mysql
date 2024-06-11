@@ -2,7 +2,7 @@ import { createClient } from "@libsql/client";
 import { getRoutes } from './src/scripts/get-elevator.js';
 import { putRoutes } from './src/scripts/put-elevator.js';
 import { callElevatorAPI, callElevatorRouteHandler } from './src/scripts/post-elevator.js';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 // dotenv.config();
 // HOW KNOW WHERE THE LOGGING STM COMES FROM? IF REMOVE DOTENV HERE,
 // IN RAILWAY PERHAPS IT WILL NOW SHOW UNDEFINED?
